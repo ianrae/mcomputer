@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<entities orm="ebean"> 
+
+<entity name="Company">
+	<field>@Id Long id</field>
+	<field>@Required String name</field>
+
+	<query>find_by_name</query>
+</entity>
+
+
+</entities>
