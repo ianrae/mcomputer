@@ -28,7 +28,7 @@ public class Computer extends Model {
     public Date discontinued;
     
     @ManyToOne
-    public Company company;
+    public CompanyModel company;
     
     /**
      * Generic query helper for entity Computer with id Long
