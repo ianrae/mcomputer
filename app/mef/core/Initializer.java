@@ -29,15 +29,16 @@ public class Initializer
 		SfxContext ctx = new SfxContext();
 		AllKnownDAOs_GEN knownDAOs = new AllKnownDAOs_GEN();
 		knownDAOs.registerDAOs(ctx, createMocks);
+		theCtx = ctx;
 		return ctx;
 	}
 	
 	public static void loadSeedData(SfxContext ctx)
 	{
-		String json = ResourceReader.readSeedFile("json-user1.txt");
+		String json = ResourceReader.readSeedFile("json1.txt");
 		EntityLoader loader = new EntityLoader(ctx);
 		try {
-			loader.loadUser(json);
+			loader.loadAll(json);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,5 +1,5 @@
 //THIS FILE HAS BEEN AUTO-GENERATED. DO NOT MODIFY.
-package boundaries.daos;
+package mef.gen;
 
 
 import java.util.ArrayList;
@@ -18,18 +18,18 @@ import boundaries.Boundary;
 import boundaries.daos.*;
 import mef.core.Initializer;
 
-import models.CompanyModel;
+import models.ComputerModel;
 import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
-import mef.entities.Company;
+import mef.entities.Computer;
 import com.avaje.ebean.Page;
-public class CompanyDAO implements ICompanyDAO 
+public class ComputerDAO_GEN implements IComputerDAO 
 {
 	@Override
-	public void save(Company entity) 
+	public void save(Computer entity) 
 	{
-		CompanyModel t = (CompanyModel)entity.cc; 
+		ComputerModel t = (ComputerModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			System.out.println("save-auto-create");
@@ -44,9 +44,9 @@ public class CompanyDAO implements ICompanyDAO
 	}
 
 	@Override
-	public Company findById(long id) 
+	public Computer findById(long id) 
 	{
-		CompanyModel t = CompanyModel.find.byId(id);
+		ComputerModel t = ComputerModel.find.byId(id);
 		if (t == null)
 		{
 			return null;
@@ -57,42 +57,42 @@ public class CompanyDAO implements ICompanyDAO
 	}
 
 	@Override
-	public List<Company> all() 
+	public List<Computer> all() 
 	{
-		List<CompanyModel> L = CompanyModel.all();
-		List<Company> entityL = createEntityFromModel(L);
+		List<ComputerModel> L = ComputerModel.all();
+		List<Computer> entityL = createEntityFromModel(L);
 		return entityL;
 	}
 
 	@Override
 	public int size() 
 	{
-		return CompanyModel.all().size();
+		return ComputerModel.all().size();
 	}
 
 	@Override
 	public void delete(long id) 
 	{
-		CompanyModel t = CompanyModel.find.byId(id);
+		ComputerModel t = ComputerModel.find.byId(id);
 		t.delete();
 	}
 
-	//Company
+	//Computer
 	//create model, set entity, and call all setters
-	public static CompanyModel createModelFromEntity(Company entity)
+	public static ComputerModel createModelFromEntity(Computer entity)
 	{
 		if (entity == null)
 		{
 			return null;
 		}
-		CompanyModel t = new CompanyModel();
+		ComputerModel t = new ComputerModel();
 		entity.cc = t;
 		t.entity = entity;
 		touchAll(t, entity);
 		return t;
 	}
 	//create entity, set m.cc and t.entity, copy all fields from model to entity
-	public static Company createEntityFromModel(CompanyModel t)
+	public static Computer createEntityFromModel(ComputerModel t)
 	{
 		if (t == null)
 		{
@@ -103,19 +103,19 @@ public class CompanyDAO implements ICompanyDAO
 		{
 			return t.entity; //already exists
 		}
-		Company entity = new Company();
+		Computer entity = new Computer();
 		entity.cc = t;
 		entity.id = (t.getId() == null) ? 0 : t.getId();		
 		t.entity = entity;
 		touchAll(entity, t);
 		return entity;
 	}
-	public static List<Company> createEntityFromModel(List<CompanyModel> L)
+	public static List<Computer> createEntityFromModel(List<ComputerModel> L)
 	{
-		ArrayList<Company> entityL = new ArrayList<Company>();
-		for(CompanyModel t : L)
+		ArrayList<Computer> entityL = new ArrayList<Computer>();
+		for(ComputerModel t : L)
 		{
-			Company entity = createEntityFromModel(t);
+			Computer entity = createEntityFromModel(t);
 			if (entity != null) //why??!!
 			{
 				entityL.add(entity);
@@ -128,15 +128,15 @@ public class CompanyDAO implements ICompanyDAO
 	@Override
 	public void updateFrom(IFormBinder binder) 
 	{
-		CompanyModel model = (CompanyModel) binder.getRawObject();
+		ComputerModel model = (ComputerModel) binder.getRawObject();
 		model.update();
 	}
 
 
 	@Override
-	public void update(Company entity) 
+	public void update(Computer entity) 
 	{
-		CompanyModel t = (CompanyModel)entity.cc; 
+		ComputerModel t = (ComputerModel)entity.cc; 
 		if (t == null) //not yet known by db? (newly created)
 		{
 			t.entity = null; //throw exception
@@ -148,26 +148,39 @@ public class CompanyDAO implements ICompanyDAO
 		t.update();
 	}
 
-       protected static void touchAll(CompanyModel t, Company entity)
+       protected static void touchAll(ComputerModel t, Computer entity)
 {
 	t.setName(entity.name);
+	t.setIntroduced(entity.introduced);
+	t.setDiscontinued(entity.discontinued);
+	CompanyDAO companyDAO = (CompanyDAO)Initializer.theCtx.getServiceLocator().getInstance(ICompanyDAO.class);
+	t.setCompany(companyDAO.createModelFromEntity(entity.company));
 }
 
-protected static void touchAll(Company entity, CompanyModel t)
+protected static void touchAll(Computer entity, ComputerModel t)
 {
 	entity.name = t.getName();
+	entity.introduced = t.getIntroduced();
+	entity.discontinued = t.getDiscontinued();
+	CompanyDAO companyDAO = (CompanyDAO)Initializer.theCtx.getServiceLocator().getInstance(ICompanyDAO.class);
+	entity.company = companyDAO.createEntityFromModel(t.getCompany());
 }
 
     @Override
-    public Company find_by_name(String val) 
+    public Computer find_by_name(String val) 
     {
-      CompanyModel model = CompanyModel.find.where().eq("name", val).findUnique();
+      ComputerModel model = ComputerModel.find.where().eq("name", val).findUnique();
 	  if (model == null)
 	  {
 		return null;
 	  }
-	  Company entity = createEntityFromModel(model);
+	  Computer entity = createEntityFromModel(model);
 	  return entity;
     }
+
+public Page<Computer> page(int page, int pageSize,String orderBy, String filter)
+{
+	return null;
+}
 
 }

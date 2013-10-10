@@ -6,10 +6,8 @@ import java.util.Set;
 
 import mef.daos.ICompanyDAO;
 import mef.daos.IComputerDAO;
-import mef.daos.IUserDAO;
 import mef.entities.Company;
 import mef.entities.Computer;
-import mef.entities.User;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -19,14 +17,12 @@ import org.mef.framework.sfx.SfxContext;
 
 public class EntityLoader extends SfxBaseObj
 {
-	private IUserDAO userDal; 
 	private ICompanyDAO companyDal;
 	private IComputerDAO computerDal;
 	
 	public EntityLoader(SfxContext ctx)
 	{
 		super(ctx);
-		userDal = (IUserDAO) Initializer.getDAO(IUserDAO.class); 
 		companyDal = (ICompanyDAO) Initializer.getDAO(ICompanyDAO.class); 
 		computerDal = (IComputerDAO) Initializer.getDAO(IComputerDAO.class); 
 	}

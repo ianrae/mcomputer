@@ -12,8 +12,10 @@ public class OtherTests
 	@Test
 	public void test() 
 	{
-		Initializer.init();
+		Initializer.createContext(true); //don't call init in unit tests
 		assertNotNull(Initializer.theCtx);
+		
+		Initializer.loadSeedData(Initializer.theCtx);
 	}
 
 }

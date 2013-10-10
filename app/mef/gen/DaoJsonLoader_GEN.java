@@ -57,4 +57,52 @@ public class DaoJsonLoader_GEN
 		}
 		return null;
 	}
+	public Computer readComputer(JsonNode node)
+	{
+		Computer obj = new Computer();
+		JsonNode jj = node.get("id");
+		obj.id = jj.asLong();
+
+				jj = node.get("name");
+				obj.name = jj.getTextValue();
+
+				jj = node.get("introduced");
+
+				jj = node.get("discontinued");
+
+				jj = node.get("company");
+
+
+
+		return obj;
+	}
+	public List<Computer> loadComputers(JsonNode rootNode) 
+	{
+		List<Computer> phoneL = new ArrayList<Computer>();
+
+    	JsonNode msgNode = rootNode.path("Computer");
+		Iterator<JsonNode> ite = msgNode.getElements();
+
+		int i = 0;
+		while (ite.hasNext()) {
+			JsonNode temp = ite.next();
+			Computer ph = readComputer(temp);
+
+			phoneL.add(ph);
+			i++;
+		}    	
+
+		return phoneL;
+	}
+	protected Computer findComputerWithId(long id, List<Computer> phoneL) 
+	{
+		for (Computer ph : phoneL)
+		{
+			if (ph.id == id)
+			{
+				return ph;
+			}
+		}
+		return null;
+	}
 }
