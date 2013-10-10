@@ -2,28 +2,19 @@
 
 package mef.presenters;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import mef.daos.ICompanyDAO;
+import mef.presenters.replies.CompanyReply;
 
-import org.mef.framework.Logger;
-import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
-import org.mef.framework.commands.Command;
 import org.mef.framework.commands.NewCommand;
 import org.mef.framework.commands.ShowCommand;
 import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
-import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
-
-import mef.daos.ICompanyDAO;
-import mef.entities.Company;
-import mef.presenters.replies.CompanyReply;
 public class CompanyPresenter extends Presenter
 {
 	private ICompanyDAO _dao;
@@ -45,6 +36,7 @@ public class CompanyPresenter extends Presenter
 	{
 		CompanyReply reply = createReply(); 
 		reply.setDestination(Reply.VIEW_INDEX);
+		reply._allL = _dao.all();
 		return reply;
 	}
 
