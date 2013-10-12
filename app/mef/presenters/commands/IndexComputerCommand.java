@@ -5,14 +5,14 @@ import org.mef.framework.commands.IndexCommand;
 public class IndexComputerCommand extends IndexCommand 
 {
 	public int pageSize;
-	public int pageNum; //1-based
+	public int pageNum; //0-based
 	public String orderBy;
 	public String filter;
 	
 	public IndexComputerCommand()
 	{
 		pageSize = 4;
-		pageNum = 1;
+		pageNum = 0;
 		orderBy = "name";
 		filter = "";
 	}

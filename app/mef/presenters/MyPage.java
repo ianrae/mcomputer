@@ -9,7 +9,7 @@ public class MyPage<Computer> implements Page<Computer>
 {
 	List<Computer> L;
 	int pageSize;
-	int pageNum;  //1-based
+	int pageNum;  //0-based
 	
 	public MyPage(List<Computer> L, int pageSize, int pageNum)
 	{
@@ -27,7 +27,7 @@ public class MyPage<Computer> implements Page<Computer>
 	@Override
 	public List<Computer> getList() 
 	{
-		int start = (pageNum - 1) * pageSize;
+		int start = (pageNum) * pageSize;
 		int end = (start + pageSize <= L.size()) ? start + pageSize : L.size();
 		
 		if (start < 0 || start > (L.size() - 1) || end > L.size())
@@ -41,7 +41,7 @@ public class MyPage<Computer> implements Page<Computer>
 	@Override
 	public int getPageIndex() 
 	{
-		return this.pageNum - 1; //0-based
+		return this.pageNum; //0-based
 	}
 
 	@Override
@@ -62,13 +62,13 @@ public class MyPage<Computer> implements Page<Computer>
 	@Override
 	public boolean hasNext() 
 	{
-		return (this.pageNum < this.getTotalPageCount());
+		return (this.pageNum < (this.getTotalPageCount() - 1));
 	}
 
 	@Override
 	public boolean hasPrev() 
 	{
-		return (this.pageNum > 1);
+		return (this.pageNum > 0);
 	}
 
 	@Override
