@@ -2,20 +2,39 @@ package mef.presenters;
 
 import java.util.ArrayList;
 import java.util.List;
+import mef.entities.Computer;
+import mef.daos.IComputerDAO;
 
 import com.avaje.ebean.Page;
 
-public class MyPage<Computer> implements Page<Computer>
+public class MyPage<T> implements Page<T>
 {
-	List<Computer> L;
+	List<T> L;
 	int pageSize;
 	int pageNum;  //0-based
+	IComputerDAO _dao;
+	String orderBy;
 	
-	public MyPage(List<Computer> L, int pageSize, int pageNum)
+	public MyPage(IComputerDAO dao, int pageSize, int pageNum, String orderBy)
 	{
-		this.L = L;
+		this._dao = dao;
 		this.pageSize = pageSize;
 		this.pageNum = pageNum;
+		this.orderBy = orderBy;
+		
+		if (orderBy == null)
+		{
+			this.L = (List<T>) _dao.all();
+		}
+		else
+		{
+			this.L = (List<T>) _dao.all_order_by(orderBy, "asc");
+		}
+	}
+	
+	public void forceList(List<T> L)
+	{
+		this.L = L;
 	}
 	
 	@Override
@@ -25,16 +44,16 @@ public class MyPage<Computer> implements Page<Computer>
 	}
 
 	@Override
-	public List<Computer> getList() 
+	public List<T> getList() 
 	{
 		int start = (pageNum) * pageSize;
 		int end = (start + pageSize <= L.size()) ? start + pageSize : L.size();
 		
 		if (start < 0 || start > (L.size() - 1) || end > L.size())
 		{
-			return new ArrayList<Computer>(); //empty
+			return new ArrayList<T>(); //empty
 		}
-		List<Computer> someL = L.subList(start, end);
+		List<T> someL = L.subList(start, end);
 		return someL;
 	}
 
@@ -72,16 +91,16 @@ public class MyPage<Computer> implements Page<Computer>
 	}
 
 	@Override
-	public Page<Computer> next() 
+	public Page<T> next() 
 	{
-		Page<Computer> pg = new MyPage<Computer>(L, pageSize, pageNum + 1);
+		Page<T> pg = new MyPage<T>(_dao, pageSize, pageNum + 1, orderBy);
 		return pg;
 	}
 
 	@Override
-	public Page<Computer> prev() 
+	public Page<T> prev() 
 	{
-		Page<Computer> pg = new MyPage<Computer>(L, pageSize, pageNum - 1);
+		Page<T> pg = new MyPage<T>(_dao, pageSize, pageNum - 1, orderBy);
 		return pg;
 	}
 

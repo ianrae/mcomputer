@@ -183,4 +183,10 @@ public Page<Computer> page(int page, int pageSize,String orderBy, String filter)
 	return null;
 }
 
+@Override
+public List<Computer> all_order_by(String fieldName, String orderBy) {
+	// TODO Auto-generated method stub
+	return null;
+}
+
 }

@@ -3,6 +3,7 @@
 package mef.daos;
 
 import mef.entities.*;
+
 import java.util.List;
 import org.mef.framework.binder.IFormBinder;
 import org.mef.framework.dao.IDAO;
@@ -19,5 +20,8 @@ public interface IComputerDAO  extends IDAO
     public Computer find_by_name(String val);
 
 Page<Computer> page(int page, int pageSize,String orderBy, String filter);
+
+ List<Computer> all_order_by(String fieldName, String orderBy);
+
 
 }

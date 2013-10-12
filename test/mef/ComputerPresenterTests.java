@@ -55,7 +55,9 @@ public class ComputerPresenterTests extends BasePresenterTest
 	public void indexTestOne() 
 	{
 		Initializer.loadSeedData(_ctx);
-		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand());
+		IndexComputerCommand cmd = new IndexComputerCommand();
+		cmd.orderBy = null;
+		ComputerReply reply = (ComputerReply) _presenter.process(cmd);
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		
@@ -65,7 +67,7 @@ public class ComputerPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 4);
 		
 		log("page 2..");
-		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1));
+		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1, null, ""));
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		
@@ -74,6 +76,20 @@ public class ComputerPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 4);
 	}
 	
+	@Test
+	public void indexTestOrderByName() 
+	{
+		Initializer.loadSeedData(_ctx);
+		IndexComputerCommand cmd = new IndexComputerCommand();
+		ComputerReply reply = (ComputerReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		
+		List<Computer> L = reply.page.getList();
+		assertEquals("ACE", L.get(0).name);
+		assertEquals(null, L.get(0).introduced);
+		chkReplyWithoutEntity(reply, true, 4);
+	}
 	
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)
