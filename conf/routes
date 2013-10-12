@@ -3,8 +3,10 @@
 # ~~~~
 
 # Default path will just redirect to the computer list
-GET     /                           controllers.Application.index()
+GET     /                           controllers.Application.index(p:Int ?= 1)
 
+# Error
+GET 	/logout                 controllers.ErrorC.logout()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

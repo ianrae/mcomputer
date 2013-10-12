@@ -9,7 +9,7 @@ public class MyPage<Computer> implements Page<Computer>
 {
 	List<Computer> L;
 	int pageSize;
-	int pageNum;
+	int pageNum;  //1-based
 	
 	public MyPage(List<Computer> L, int pageSize, int pageNum)
 	{

@@ -2,6 +2,8 @@ package mef;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +24,7 @@ import mef.daos.IComputerDAO;
 import mef.daos.mocks.MockComputerDAO;
 import mef.entities.Computer;
 import mef.presenters.ComputerPresenter;
+import mef.presenters.MyPage;
 import mef.presenters.replies.ComputerReply;
 
 public class ComputerPresenterTests extends BasePresenterTest
@@ -54,8 +57,12 @@ public class ComputerPresenterTests extends BasePresenterTest
 		ComputerReply reply = (ComputerReply) _presenter.process(new IndexCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		
+		List<Computer> L = reply.page.getList();
 		assertEquals("MacBook Pro 15.4 inch", _dao.all().get(0).name);
-		chkReplyWithoutEntity(reply, true, 571);
+		chkReplyWithoutEntity(reply, true, 4);
+		
+		
 	}
 	
 	
@@ -69,25 +76,27 @@ public class ComputerPresenterTests extends BasePresenterTest
 		assertNotNull(reply._entity);
 		if (listExists)
 		{
-			assertNotNull(reply._allL);
-			assertEquals(expected, reply._allL.size());
+			MyPage<Computer> page = reply.page;
+			assertNotNull(page);
+			assertEquals(expected, page.getList().size());
 		}
 		else
 		{
-			assertNull(reply._allL);
+			assertNull(reply.page);
 		}
 	}
 	private void chkReplyWithoutEntity(ComputerReply reply, boolean listExists, int expected)
 	{
 		assertEquals(null, reply._entity);
+		MyPage<Computer> page = reply.page;
 		if (listExists)
 		{
-			assertNotNull(reply._allL);
-			assertEquals(expected, reply._allL.size());
+			assertNotNull(page);
+			assertEquals(expected, page.getList().size());
 		}
 		else
 		{
-			assertNull(reply._allL);
+			assertNull(page);
 		}
 	}
 	

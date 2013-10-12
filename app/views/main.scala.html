@@ -1,9 +1,9 @@
-@(content: Html)
+@(title: String)(content: Html)
 
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Computers database</title>
+        <title>@title</title>
         <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/bootstrap.min.css")"> 
         <link rel="stylesheet" type="text/css" media="screen" href="@routes.Assets.at("stylesheets/main.css")"> 
     </head>
