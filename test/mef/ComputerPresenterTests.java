@@ -25,6 +25,7 @@ import mef.daos.mocks.MockComputerDAO;
 import mef.entities.Computer;
 import mef.presenters.ComputerPresenter;
 import mef.presenters.MyPage;
+import mef.presenters.commands.IndexComputerCommand;
 import mef.presenters.replies.ComputerReply;
 
 public class ComputerPresenterTests extends BasePresenterTest
@@ -43,7 +44,7 @@ public class ComputerPresenterTests extends BasePresenterTest
 	@Test
 	public void indexTest() 
 	{
-		ComputerReply reply = (ComputerReply) _presenter.process(new IndexCommand());
+		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		chkDalSize(0);
@@ -54,15 +55,22 @@ public class ComputerPresenterTests extends BasePresenterTest
 	public void indexTestOne() 
 	{
 		Initializer.loadSeedData(_ctx);
-		ComputerReply reply = (ComputerReply) _presenter.process(new IndexCommand());
+		ComputerReply reply = (ComputerReply) _presenter.process(new IndexComputerCommand());
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		
 		List<Computer> L = reply.page.getList();
-		assertEquals("MacBook Pro 15.4 inch", _dao.all().get(0).name);
+		assertEquals("MacBook Pro 15.4 inch", L.get(0).name);
 		chkReplyWithoutEntity(reply, true, 4);
 		
+		log("page 2..");
+		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 2));
 		
+		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
+		
+		L = reply.page.getList();
+		assertEquals("CM-5", L.get(0).name);
+		chkReplyWithoutEntity(reply, true, 4);
 	}
 	
 	

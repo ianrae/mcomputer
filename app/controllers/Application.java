@@ -14,6 +14,7 @@ import play.*;
 
 import views.html.*;
 
+import mef.presenters.commands.IndexComputerCommand;
 import mef.presenters.replies.ComputerReply;
 import models.*;
 
@@ -26,7 +27,7 @@ public class Application extends Controller
     public static Result index(int pageNum) 
     {
 		ComputerBoundary boundary = ComputerBoundary.create();
-		ComputerReply reply = boundary.process(new IndexCommand()); //IndexComputerCommand(4, pageNum, orderBy, filter));
+		ComputerReply reply = boundary.process(new IndexComputerCommand(10, pageNum)); // orderBy, filter));
 		return renderOrForward(boundary, reply);
     }
     

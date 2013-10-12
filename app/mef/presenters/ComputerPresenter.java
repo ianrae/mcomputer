@@ -23,6 +23,7 @@ import org.mef.framework.sfx.SfxContext;
 
 import mef.daos.IComputerDAO;
 import mef.entities.Computer;
+import mef.presenters.commands.IndexComputerCommand;
 import mef.presenters.replies.ComputerReply;
 public class ComputerPresenter extends Presenter
 {
@@ -41,10 +42,10 @@ public class ComputerPresenter extends Presenter
 		return _reply;
 	}
 
-	public ComputerReply onIndexCommand(IndexCommand cmd)
+	public ComputerReply onIndexComputerCommand(IndexComputerCommand cmd)
 	{
 		ComputerReply reply = createReply(); 
-		reply.page = new MyPage(_dao.all(), 4, 1);
+		reply.page = new MyPage(_dao.all(), cmd.pageSize, cmd.pageNum);
 		reply.setDestination(Reply.VIEW_INDEX);
 		return reply;
 	}
