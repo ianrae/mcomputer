@@ -68,8 +68,10 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 				obj.name = jj.getTextValue();
 
 				jj = node.get("introduced");
+				obj.introduced = readDate(jj, "yyyy-MM-dd");
 
 				jj = node.get("discontinued");
+				obj.discontinued = readDate(jj, "yyyy-MM-dd");
 
 				jj = node.get("company");
 
