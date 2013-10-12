@@ -2,10 +2,16 @@
 
 package mef.gen;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
+
 import org.codehaus.jackson.JsonNode;
+
+import play.data.format.Formats;
+import play.data.format.Formats.DateFormatter;
 import mef.entities.*;
 import java.util.Date;
 
@@ -67,6 +73,7 @@ public class DaoJsonLoader_GEN
 				obj.name = jj.getTextValue();
 
 				jj = node.get("introduced");
+				obj.introduced = readDate(jj, "yyyy-MM-dd");
 
 				jj = node.get("discontinued");
 
@@ -75,6 +82,26 @@ public class DaoJsonLoader_GEN
 
 
 		return obj;
+	}
+	private Date readDate(JsonNode jj, String pattern)
+	{
+		if (jj == null)
+		{
+			return null;
+		}
+		
+		Formats.DateFormatter fmt = new DateFormatter(pattern);
+		Locale loc = Locale.getDefault();
+
+		Date dt = null;
+		try {
+			dt = fmt.parse(jj.getTextValue(), loc);
+		} catch (ParseException e) 
+		{
+			//log error!!
+			e.printStackTrace();
+		}
+		return dt;
 	}
 	public List<Computer> loadComputers(JsonNode rootNode) 
 	{

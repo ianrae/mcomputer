@@ -24,12 +24,18 @@ import models.*;
 public class Application extends Controller 
 {
     
-    public static Result index(int pageNum) 
+    public static Result index(int pageNum, String sortBy, String order, String filter) 
     {
+    	Logger.info("PAGE: " + pageNum);
 		ComputerBoundary boundary = ComputerBoundary.create();
 		ComputerReply reply = boundary.process(new IndexComputerCommand(10, pageNum)); // orderBy, filter));
 		return renderOrForward(boundary, reply);
     }
+    
+    public static Result edit(Long id) 
+    {
+        return ok("asdf");
+    }    
     
     private static Result renderOrForward(ComputerBoundary boundary, ComputerReply reply)
     {
@@ -42,7 +48,7 @@ public class Application extends Controller
 		switch(reply.getDestination())
 		{
 		case Reply.VIEW_INDEX:
-			return ok(views.html.index.render(reply.page));    	
+			return ok(views.html.index.render(reply.page, "name", "asc", ""));    	
 
 
 		default:
