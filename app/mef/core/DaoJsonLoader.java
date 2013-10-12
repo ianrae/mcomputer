@@ -21,7 +21,12 @@ public class DaoJsonLoader extends DaoJsonLoader_GEN
 				obj.company = new Company();
 				obj.company.id = jj.asLong();
 			}
+			
 		}
+		jj = node.get("introduced");
+		obj.introduced = this.readDate(jj, "yyyy-MM-dd");
+		jj = node.get("discontinued");
+		obj.discontinued = this.readDate(jj, "yyyy-MM-dd");
 		return obj;
 	}
 }

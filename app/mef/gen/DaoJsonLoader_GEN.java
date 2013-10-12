@@ -2,25 +2,20 @@
 
 package mef.gen;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
-
 import org.codehaus.jackson.JsonNode;
-import org.mef.framework.loaders.BaseDaoJsonLoader;
-import org.mef.framework.sfx.SfxContext;
-
-import play.data.format.Formats;
-import play.data.format.Formats.DateFormatter;
 import mef.entities.*;
 import java.util.Date;
+import org.mef.framework.loaders.BaseDaoJsonLoader;
 
 
 
 public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 {
+
+
 	public Company readCompany(JsonNode node)
 	{
 		Company obj = new Company();
@@ -73,7 +68,6 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 				obj.name = jj.getTextValue();
 
 				jj = node.get("introduced");
-				obj.introduced = readDate(jj, "yyyy-MM-dd");
 
 				jj = node.get("discontinued");
 
@@ -83,7 +77,6 @@ public class DaoJsonLoader_GEN extends BaseDaoJsonLoader
 
 		return obj;
 	}
-
 	public List<Computer> loadComputers(JsonNode rootNode) 
 	{
 		List<Computer> phoneL = new ArrayList<Computer>();

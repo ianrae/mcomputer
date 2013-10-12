@@ -61,6 +61,7 @@ public class ComputerPresenterTests extends BasePresenterTest
 		
 		List<Computer> L = reply.page.getList();
 		assertEquals("MacBook Pro 15.4 inch", L.get(0).name);
+		assertEquals(83, L.get(0).introduced.getYear());
 		chkReplyWithoutEntity(reply, true, 4);
 		
 		log("page 2..");
