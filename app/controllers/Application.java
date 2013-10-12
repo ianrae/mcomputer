@@ -24,11 +24,11 @@ import models.*;
 public class Application extends Controller 
 {
     
-    public static Result index(int pageNum, String sortBy, String order, String filter) 
+    public static Result index(int pageNum, String sortBy, String orderBy, String filter) 
     {
     	Logger.info("PAGE: " + pageNum);
 		ComputerBoundary boundary = ComputerBoundary.create();
-		ComputerReply reply = boundary.process(new IndexComputerCommand(10, pageNum)); // orderBy, filter));
+		ComputerReply reply = boundary.process(new IndexComputerCommand(10, pageNum, orderBy, filter));
 		return renderOrForward(boundary, reply);
     }
     
