@@ -23,6 +23,8 @@ import play.db.ebean.Model.Finder;
 
 import mef.daos.*;
 import mef.entities.Computer;
+import mef.presenters.MyPage;
+
 import com.avaje.ebean.Page;
 public class ComputerDAO_GEN implements IComputerDAO 
 {
@@ -180,13 +182,18 @@ protected static void touchAll(Computer entity, ComputerModel t)
 
 public Page<Computer> page(int page, int pageSize,String orderBy, String filter)
 {
-	return null;
+	String order = "asc";
+	List<ComputerModel> L = ComputerModel.find.where()
+            .ilike("name", "%" + filter + "%")
+            .orderBy(orderBy + " " + order)
+            .fetch("company")
+            .findPagingList(pageSize).getAsList();
+	
+	
+	List<Computer> entityL = this.createEntityFromModel(L);
+	
+	return new MyPage(entityL, pageSize, page, orderBy);
 }
 
-@Override
-public List<Computer> all_order_by(String fieldName, String orderBy) {
-	// TODO Auto-generated method stub
-	return null;
-}
 
 }

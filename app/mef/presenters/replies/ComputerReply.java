@@ -9,10 +9,12 @@ import mef.entities.Computer;
 import mef.presenters.MyPage;
 
 import org.mef.framework.replies.Reply;
+
+import com.avaje.ebean.Page;
 public class ComputerReply extends Reply
 {
 //	public List<Computer> _allL;
-	public MyPage<Computer> page;
+	public Page<Computer> page;
 	public Computer _entity; //for New and Create
 
 	public ComputerReply()

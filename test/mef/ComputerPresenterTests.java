@@ -19,6 +19,8 @@ import org.mef.framework.presenters.Presenter;
 import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxContext;
 
+import com.avaje.ebean.Page;
+
 import mef.core.Initializer;
 import mef.daos.IComputerDAO;
 import mef.daos.mocks.MockComputerDAO;
@@ -101,7 +103,7 @@ public class ComputerPresenterTests extends BasePresenterTest
 		assertNotNull(reply._entity);
 		if (listExists)
 		{
-			MyPage<Computer> page = reply.page;
+			Page<Computer> page = reply.page;
 			assertNotNull(page);
 			assertEquals(expected, page.getList().size());
 		}
@@ -113,7 +115,7 @@ public class ComputerPresenterTests extends BasePresenterTest
 	private void chkReplyWithoutEntity(ComputerReply reply, boolean listExists, int expected)
 	{
 		assertEquals(null, reply._entity);
-		MyPage<Computer> page = reply.page;
+		Page<Computer> page = reply.page;
 		if (listExists)
 		{
 			assertNotNull(page);

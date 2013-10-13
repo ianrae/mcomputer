@@ -21,7 +21,6 @@ public interface IComputerDAO  extends IDAO
 
 Page<Computer> page(int page, int pageSize,String orderBy, String filter);
 
- List<Computer> all_order_by(String fieldName, String orderBy);
 
 
 }

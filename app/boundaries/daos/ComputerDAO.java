@@ -27,8 +27,7 @@ public class ComputerDAO extends ComputerDAO_GEN
 				.fetch("company").findList();
 
 		List<Computer> L = createEntityFromModel(list);
-		MyPage<Computer> resultPage = new MyPage<Computer>(this, pageSize, page, orderBy);
-		resultPage.forceList(L);
+		MyPage<Computer> resultPage = new MyPage<Computer>(L, pageSize, page, orderBy);
 		return resultPage;
 	}
 

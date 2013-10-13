@@ -45,7 +45,7 @@ public class ComputerPresenter extends Presenter
 	public ComputerReply onIndexComputerCommand(IndexComputerCommand cmd)
 	{
 		ComputerReply reply = createReply(); 
-		reply.page = new MyPage<Computer>(_dao, cmd.pageSize, cmd.pageNum, cmd.orderBy);
+		reply.page = _dao.page(cmd.pageNum, cmd.pageSize, cmd.orderBy, "");
 		reply.setDestination(Reply.VIEW_INDEX);
 		return reply;
 	}
