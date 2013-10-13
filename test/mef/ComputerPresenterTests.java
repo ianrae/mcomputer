@@ -64,9 +64,12 @@ public class ComputerPresenterTests extends BasePresenterTest
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		
 		List<Computer> L = reply.page.getList();
-		assertEquals("MacBook Pro 15.4 inch", L.get(0).name);
-		assertEquals(83, L.get(0).introduced.getYear());
+		Computer c = L.get(0);
+		assertEquals("MacBook Pro 15.4 inch", c.name);
+		assertEquals(83, c.introduced.getYear());
 		chkReplyWithoutEntity(reply, true, 4);
+		
+		assertEquals("Apple Inc.", c.company.name);
 		
 		log("page 2..");
 		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1, null, "asc", ""));
@@ -74,10 +77,12 @@ public class ComputerPresenterTests extends BasePresenterTest
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		
 		L = reply.page.getList();
-		assertEquals("CM-5", L.get(0).name);
+		c = L.get(0);
+		assertEquals("CM-5", c.name);
 		chkReplyWithoutEntity(reply, true, 4);
 		
 		assertEquals("5 to 8 of 571", reply.page.getDisplayXtoYofZ(" to "," of "));
+		assertEquals("Thinking Machines", c.company.name);
 	}
 	
 	@Test

@@ -49,11 +49,17 @@
         </div>
     } 
 
-    <div id="actions">
+	<div id="actions">
         
+        <form action="@link(0, "name")" method="GET">
+            <input type="search" id="searchbox" name="f" value="@currentFilter" placeholder="Filter by computer name...">
+            <input type="submit" id="searchsubmit" value="Filter by name" class="btn primary">
+        </form>
+        
+        <a class="btn success" id="add" href="@routes.Application.create()">Add a new computer</a>
         
     </div>
-    
+        
     @if(currentPage.getTotalRowCount == 0) {
         
         <div class="well">

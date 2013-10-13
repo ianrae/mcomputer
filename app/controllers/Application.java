@@ -35,7 +35,12 @@ public class Application extends Controller
     public static Result edit(Long id) 
     {
         return ok("asdf");
-    }    
+    }   
+    
+    public static Result create() 
+    {
+        return ok("asdf");
+    }
     
     private static Result renderOrForward(ComputerBoundary boundary, ComputerReply reply,  String sortBy, String orderBy, String filter)
     {
