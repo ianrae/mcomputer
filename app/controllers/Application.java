@@ -2,6 +2,7 @@ package controllers;
 
 import java.util.*;
 
+import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.NewCommand;
 import org.mef.framework.replies.Reply;
@@ -47,7 +48,9 @@ public class Application extends Controller
     }   
     public static Result save() 
     {
-        return ok("sasdf");
+		ComputerBoundary boundary = ComputerBoundary.create();
+		ComputerReply reply = boundary.addFormAndProcess(new CreateCommand());
+		return renderOrForward(boundary, reply, "","","");
     }   
     
     public static Result create() 

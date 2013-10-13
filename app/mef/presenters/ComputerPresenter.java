@@ -85,7 +85,32 @@ public class ComputerPresenter extends Presenter
 	{
 		ComputerReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
-		return reply;
+		
+		IFormBinder binder = cmd.getFormBinder();
+		if (! binder.bind())
+		{
+			reply.setFlashFail("binding failed!");
+			Logger.info("BINDING failed");
+			reply._entity = (Computer) binder.getObject();
+			addOptions(reply);
+			return reply;
+		}
+		else
+		{
+			Computer entity = (Computer) binder.getObject();
+			if (entity == null)
+			{
+				reply.setFailed(true);
+			}
+			else
+			{
+				_dao.save(entity);
+				Logger.info("saved new");
+				reply.setFlashSuccess("created computer " + entity.name);
+				reply.setDestination(Reply.FORWARD_INDEX);
+			}
+			return reply;
+		}
 	}
 
 	public ComputerReply onEditCommand(EditCommand cmd)

@@ -100,6 +100,51 @@ public class ComputerPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 4);
 	}
 	
+	@Test
+	public void testNew() 
+	{
+		Initializer.loadSeedData(_ctx);
+		NewCommand cmd = new NewCommand();
+		ComputerReply reply = (ComputerReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.VIEW_NEW, null);
+		chkReplyWithEntity(reply, false, 0);
+		assertNotNull(reply._entity.name);
+		assertNotNull(reply._entity.company);
+		assertNotNull(reply._options);
+	}
+	
+	
+	//--- create ---
+	@Test
+	public void testCreate() 
+	{
+		Computer t = initComputer();
+		int n = _dao.all().size();
+		Command cmd = createWithBinder(new CreateCommand(), t, true);
+		
+		ComputerReply reply = (ComputerReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, "created computer task1");
+		chkReplyWithoutEntity(reply, false, n + 1);
+		t = _dao.findById(1);
+		assertEquals(new Long(1L), t.id);
+	}
+	@Test
+	public void testCreate_ValFail() 
+	{
+		Computer t = initComputer();
+		Command cmd = createWithBinder(new CreateCommand(), t, false);
+		
+		ComputerReply reply = (ComputerReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.VIEW_NEW, "binding failed!");
+		chkDalSize(0);
+		chkReplyWithEntity(reply, false, 0);
+		assertNotNull(reply._options);
+	}	
+	
+	
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)
 	{
