@@ -19,7 +19,7 @@ public interface IComputerDAO  extends IDAO
 
     public Computer find_by_name(String val);
 
-Page<Computer> page(int page, int pageSize,String orderBy, String filter);
+Page<Computer> page(int page, int pageSize,String orderBy, String order, String filter);
 
 
 

@@ -28,8 +28,8 @@ public class Application extends Controller
     {
     	Logger.info("PAGE: " + pageNum);
 		ComputerBoundary boundary = ComputerBoundary.create();
-		ComputerReply reply = boundary.process(new IndexComputerCommand(10, pageNum, sortBy, filter));
-		return renderOrForward(boundary, reply);
+		ComputerReply reply = boundary.process(new IndexComputerCommand(10, pageNum, sortBy,orderBy, filter));
+		return renderOrForward(boundary, reply, sortBy, orderBy, filter);
     }
     
     public static Result edit(Long id) 
@@ -37,7 +37,7 @@ public class Application extends Controller
         return ok("asdf");
     }    
     
-    private static Result renderOrForward(ComputerBoundary boundary, ComputerReply reply)
+    private static Result renderOrForward(ComputerBoundary boundary, ComputerReply reply,  String sortBy, String orderBy, String filter)
     {
 		if (reply.failed())
 		{
@@ -48,7 +48,7 @@ public class Application extends Controller
 		switch(reply.getDestination())
 		{
 		case Reply.VIEW_INDEX:
-			return ok(views.html.index.render(reply.page, "name", "asc", ""));    	
+			return ok(views.html.index.render(reply.page, sortBy, orderBy, filter));    	
 
 
 		default:

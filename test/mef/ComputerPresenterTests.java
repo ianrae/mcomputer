@@ -69,7 +69,7 @@ public class ComputerPresenterTests extends BasePresenterTest
 		chkReplyWithoutEntity(reply, true, 4);
 		
 		log("page 2..");
-		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1, null, ""));
+		reply = (ComputerReply) _presenter.process(new IndexComputerCommand(4, 1, null, "asc", ""));
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);
 		

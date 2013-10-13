@@ -17,21 +17,18 @@ public class ComputerDAO extends ComputerDAO_GEN
 {
 
 	@Override
-	public Page<Computer> page(int page, int pageSize, String orderBy, String filter)
+	public Page<Computer> page(int page, int pageSize, String orderBy, String order, String filter)
 	{
-		String sortBy = "name";
-		String order = "asc";
-		
-		Logger.info(String.format("P %d %d '%s' '%s'", page, pageSize, orderBy, filter));
+		Logger.info(String.format("P %d %d '%s'-'%s' '%s'", page, pageSize, orderBy, order, filter));
 
 		List<ComputerModel> list = 
 				ComputerModel.find.where()
 				.ilike("name",  "%" + filter + "%" )
-				.orderBy(sortBy + " " + order)
+				.orderBy(orderBy + " " + order)
 				.fetch("company").findList();
 
 		List<Computer> L = createEntityFromModel(list);
-		MyPage<Computer> resultPage = new MyPage<Computer>(L, pageSize, page, sortBy);
+		MyPage<Computer> resultPage = new MyPage<Computer>(L, pageSize, page, orderBy);
 		return resultPage;
 	}
 

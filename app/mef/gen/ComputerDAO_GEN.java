@@ -180,9 +180,8 @@ protected static void touchAll(Computer entity, ComputerModel t)
 	  return entity;
     }
 
-public Page<Computer> page(int page, int pageSize,String orderBy, String filter)
+public Page<Computer> page(int page, int pageSize,String orderBy, String order, String filter)
 {
-	String order = "asc";
 	List<ComputerModel> L = ComputerModel.find.where()
             .ilike("name", "%" + filter + "%")
             .orderBy(orderBy + " " + order)

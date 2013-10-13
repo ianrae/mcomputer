@@ -108,14 +108,14 @@ public class MockComputerDAO_GEN implements IComputerDAO
     }
 
 //method
-public Page<Computer> page(int page, int pageSize,String orderBy, String filter)
+public Page<Computer> page(int page, int pageSize,String orderBy, String order, String filter)
 {
 	ArrayList<Computer> tmpL = new ArrayList<Computer>();
 	tmpL.addAll(_L);
 	List<Computer> list1 = tmpL;
 	if (orderBy != null)
 	{
-		_entityDB.orderBy(list1, orderBy, "asc", String.class);
+		_entityDB.orderBy(list1, orderBy, order, String.class);
 	}
 	
 	return new MyPage<Computer>(list1, pageSize, page, orderBy);
