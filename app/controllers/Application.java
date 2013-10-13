@@ -75,7 +75,8 @@ public class Application extends Controller
 		case Reply.VIEW_NEW:
 			frm = boundary.makeForm(reply); 
 			return ok(views.html.createForm.render(frm, reply._options));
-
+		case Reply.FORWARD_INDEX:
+			return  Results.redirect(routes.Application.index(0, "name", "asc", ""));
 
 		default:
 			return play.mvc.Results.redirect(routes.ErrorC.logout());	
