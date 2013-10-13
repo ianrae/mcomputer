@@ -115,7 +115,7 @@ public Page<Computer> page(int page, int pageSize,String orderBy, String filter)
 	List<Computer> list1 = tmpL;
 	if (orderBy != null)
 	{
-		_entityDB.orderBy(list1, "name", orderBy, String.class);
+		_entityDB.orderBy(list1, orderBy, "asc", String.class);
 	}
 	
 	return new MyPage<Computer>(list1, pageSize, page, orderBy);
