@@ -5,9 +5,15 @@
 # Default path will just redirect to the computer list
 GET     /                           controllers.Application.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /computers/new              controllers.Application.create()
+POST    /computers                  controllers.Application.save()
 
 #
 GET     /computers/:id              controllers.Application.edit(id:Long)
+POST    /computers/:id              controllers.Application.update(id:Long)
+
+# Delete a computer
+POST    /computers/:id/delete       controllers.Application.delete(id:Long)
+
 
 # Error
 GET 	/logout                 controllers.ErrorC.logout()

@@ -16,7 +16,8 @@ public class ComputerReply extends Reply
 //	public List<Computer> _allL;
 	public Page<Computer> page;
 	public Computer _entity; //for New and Create
-
+	public  Map<String,String> _options;
+	
 	public ComputerReply()
 	{
 	}

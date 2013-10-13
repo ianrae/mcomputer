@@ -21,19 +21,25 @@ import org.mef.framework.replies.Reply;
 import org.mef.framework.sfx.SfxBaseObj;
 import org.mef.framework.sfx.SfxContext;
 
+import mef.daos.ICompanyDAO;
 import mef.daos.IComputerDAO;
+import mef.entities.Company;
 import mef.entities.Computer;
 import mef.presenters.commands.IndexComputerCommand;
 import mef.presenters.replies.ComputerReply;
+
+
 public class ComputerPresenter extends Presenter
 {
 	private IComputerDAO _dao;
 	private ComputerReply _reply;
+	private ICompanyDAO _companyDao;
 
 	public ComputerPresenter(SfxContext ctx)
 	{
 		super(ctx); 
 		_dao = (IComputerDAO) getInstance(IComputerDAO.class);
+		_companyDao = (ICompanyDAO) getInstance(ICompanyDAO.class);
 	}
 	@Override
 	protected ComputerReply createReply()
@@ -54,8 +60,26 @@ public class ComputerPresenter extends Presenter
 	{
 		ComputerReply reply = createReply();
 		reply.setDestination(Reply.VIEW_NEW);
-		return reply; 
+		
+		reply._entity = new Computer();
+		//default vals
+		reply._entity.name = "defaultname";
+		reply._entity.company = this._companyDao.findById(1);
+		addOptions(reply);
+		return reply; //don't add list		
 	}
+	
+	private void addOptions(ComputerReply reply) 
+	{
+		LinkedHashMap<String,String> options = new LinkedHashMap<String,String>();
+		
+		List<Company> L = _companyDao.all(); //!! add sorting later
+		for(Company ph : L)
+		{
+			options.put(ph.id.toString(), ph.name);
+		}
+		reply._options = options;
+	}		
 
 	public ComputerReply onCreateCommand(CreateCommand cmd)
 	{

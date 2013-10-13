@@ -3,6 +3,7 @@ package controllers;
 import java.util.*;
 
 import org.mef.framework.commands.IndexCommand;
+import org.mef.framework.commands.NewCommand;
 import org.mef.framework.replies.Reply;
 
 import boundaries.ComputerBoundary;
@@ -36,10 +37,24 @@ public class Application extends Controller
     {
         return ok("asdf");
     }   
+    public static Result update(Long id) 
+    {
+        return ok("asdf");
+    }   
+    public static Result delete(Long id) 
+    {
+        return ok("asdf");
+    }   
+    public static Result save() 
+    {
+        return ok("sasdf");
+    }   
     
     public static Result create() 
     {
-        return ok("asdf");
+		ComputerBoundary boundary = ComputerBoundary.create();
+		ComputerReply reply = boundary.process(new NewCommand());
+		return renderOrForward(boundary, reply, "", "", "");
     }
     
     private static Result renderOrForward(ComputerBoundary boundary, ComputerReply reply,  String sortBy, String orderBy, String filter)
@@ -49,11 +64,14 @@ public class Application extends Controller
 			return redirect(routes.ErrorC.logout());
 		}
 		
-//		Form<UserModel> frm = null;
+		Form<ComputerModel> frm = null;
 		switch(reply.getDestination())
 		{
 		case Reply.VIEW_INDEX:
 			return ok(views.html.index.render(reply.page, sortBy, orderBy, filter));    	
+		case Reply.VIEW_NEW:
+			frm = boundary.makeForm(reply); 
+			return ok(views.html.createForm.render(frm, reply._options));
 
 
 		default:
