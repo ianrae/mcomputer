@@ -76,6 +76,8 @@ public class ComputerPresenterTests extends BasePresenterTest
 		L = reply.page.getList();
 		assertEquals("CM-5", L.get(0).name);
 		chkReplyWithoutEntity(reply, true, 4);
+		
+		assertEquals("5 to 8 of 571", reply.page.getDisplayXtoYofZ(" to "," of "));
 	}
 	
 	@Test

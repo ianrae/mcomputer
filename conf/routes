@@ -3,7 +3,7 @@
 # ~~~~
 
 # Default path will just redirect to the computer list
-GET     /                           controllers.Application.index(p:Int ?= 1, s ?= "name", o ?= "asc", f ?= "")
+GET     /                           controllers.Application.index(p:Int ?= 0, s ?= "name", o ?= "asc", f ?= "")
 GET     /computers/:id              controllers.Application.edit(id:Long)
 
 # Error

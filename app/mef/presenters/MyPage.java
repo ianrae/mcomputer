@@ -23,9 +23,14 @@ public class MyPage<T> implements Page<T>
 	}
 
 	@Override
-	public String getDisplayXtoYofZ(String arg0, String arg1) {
-		// TODO Auto-generated method stub
-		return null;
+	public String getDisplayXtoYofZ(String arg0, String arg1) 
+	{
+		int start = (pageNum) * pageSize;
+		int end = (start + pageSize <= L.size()) ? start + pageSize : L.size();
+		
+		//output as 1-based
+		String s =String.format("%d%s%d%s%d", start + 1, arg0, start + pageSize, arg1, L.size());
+		return s;
 	}
 
 	@Override
