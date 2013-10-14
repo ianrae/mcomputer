@@ -6,6 +6,7 @@ import org.mef.framework.commands.CreateCommand;
 import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.NewCommand;
+import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.replies.Reply;
 
 import boundaries.ComputerBoundary;
@@ -43,7 +44,9 @@ public class Application extends Controller
     }   
     public static Result update(Long id) 
     {
-        return ok("asdf");
+		ComputerBoundary boundary = ComputerBoundary.create();
+		ComputerReply reply = boundary.addFormAndProcess(new UpdateCommand(id));
+		return renderOrForward(boundary, reply, "","","");
     }   
     public static Result delete(Long id) 
     {

@@ -159,6 +159,37 @@ public class ComputerPresenterTests extends BasePresenterTest
 		assertNotNull(reply._options);
 		
 	}
+	@Test
+	public void testEdit_NotFound() 
+	{
+		Computer t = initAndSaveComputer();
+		int n = _dao.all().size();
+		ComputerReply reply = (ComputerReply) _presenter.process(new EditCommand(9999L));
+		
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+		assertNull(reply._options);
+		
+	}
+	
+	//--- update ---
+	@Test
+	public void testUpdate() 
+	{
+		Computer t = initAndSaveComputer();
+		t.name = "task2"; //simulate user edit
+		Command cmd = createWithBinder(new UpdateCommand(t.id), t, true);
+		
+		ComputerReply reply = (ComputerReply) _presenter.process(cmd);
+		
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 1);
+		
+		Computer t2 = _dao.findById(t.id);
+		assertEquals("task2", t2.name);
+	}
 	
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)

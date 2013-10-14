@@ -135,7 +135,34 @@ public class ComputerPresenter extends Presenter
 	{
 		ComputerReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
-		return reply;
+		
+		IFormBinder binder = cmd.getFormBinder();
+		if (! binder.bind())
+		{
+			reply.setFlashFail("binding failed!");
+			reply._entity = (Computer) binder.getObject();
+			if (reply._entity == null)
+			{
+				Logger.info("failbinding null entity!");
+				reply._entity = _dao.findById(cmd.id); //fix better later!!
+			}
+			addOptions(reply);
+			return reply;
+		}
+		else
+		{
+			//ensure id is a valid id
+			Computer user = _dao.findById(cmd.id);
+			if (user == null)
+			{
+				reply.setDestination(Reply.FORWARD_NOT_FOUND);
+				return reply;
+			}
+			_dao.updateFrom(binder);
+			Logger.info("zsaved update ");
+			reply.setDestination(Reply.FORWARD_INDEX);
+			return reply;
+		}
 	}
 
 
