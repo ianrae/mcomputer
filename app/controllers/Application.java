@@ -3,6 +3,7 @@ package controllers;
 import java.util.*;
 
 import org.mef.framework.commands.CreateCommand;
+import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.NewCommand;
 import org.mef.framework.replies.Reply;
@@ -36,7 +37,9 @@ public class Application extends Controller
     
     public static Result edit(Long id) 
     {
-        return ok("asdf");
+		ComputerBoundary boundary = ComputerBoundary.create();
+		ComputerReply reply = boundary.process(new EditCommand(id));
+		return renderOrForward(boundary, reply, "","","");
     }   
     public static Result update(Long id) 
     {
@@ -75,6 +78,9 @@ public class Application extends Controller
 		case Reply.VIEW_NEW:
 			frm = boundary.makeForm(reply); 
 			return ok(views.html.createForm.render(frm, reply._options));
+		case Reply.VIEW_EDIT:
+			frm = boundary.makeForm(reply); 
+			return ok(views.html.editForm.render(reply._entity.id, frm, reply._options));
 		case Reply.FORWARD_INDEX:
 			return  Results.redirect(routes.Application.index(0, "name", "asc", ""));
 

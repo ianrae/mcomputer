@@ -117,7 +117,19 @@ public class ComputerPresenter extends Presenter
 	{
 		ComputerReply reply = createReply();
 		reply.setDestination(Reply.VIEW_EDIT);
-		return reply;
+		
+		Computer user = _dao.findById(cmd.id);
+		if (user == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			return reply;
+		}
+		else
+		{
+			reply._entity = user;
+			addOptions(reply);
+			return reply;
+		}
 	}
 	public ComputerReply onUpdateCommand(UpdateCommand cmd)
 	{

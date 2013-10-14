@@ -145,6 +145,21 @@ public class ComputerPresenterTests extends BasePresenterTest
 	}	
 	
 	
+	//--- edit ---
+	@Test
+	public void testEdit() 
+	{
+		Computer t = initAndSaveComputer();
+		int n = _dao.all().size();
+		ComputerReply reply = (ComputerReply) _presenter.process(new EditCommand(t.id));
+		
+		chkReplySucessful(reply, Reply.VIEW_EDIT, null);
+		chkDalSize(1);
+		chkReplyWithEntity(reply, false, 0);
+		assertNotNull(reply._options);
+		
+	}
+	
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)
 	{
