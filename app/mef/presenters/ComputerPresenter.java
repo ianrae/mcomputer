@@ -127,6 +127,7 @@ public class ComputerPresenter extends Presenter
 		else
 		{
 			reply._entity = user;
+//			Logger.info(String.format("ed: %d", reply._entity.company.id));
 			addOptions(reply);
 			return reply;
 		}
