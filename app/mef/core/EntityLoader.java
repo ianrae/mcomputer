@@ -27,40 +27,6 @@ public class EntityLoader extends SfxBaseObj
 		computerDal = (IComputerDAO) Initializer.getDAO(IComputerDAO.class); 
 	}
 	
-    public void loadCompany(String json) throws Exception
-    {
-    	ObjectMapper mapper = new ObjectMapper();
-    	Company[] arCompany = mapper.readValue(json, Company[].class);
-    	for(int i = 0; i < arCompany.length; i++)
-    	{
-    		Company entity = arCompany[i];
-    		Company existing = companyDal.find_by_name(entity.name); //use seedWith field
-    		if (existing != null)
-    		{
-    			entity.id = existing.id;
-    		}
-    		companyDal.save(entity); //inserts or updates 
-    	}
-    }
-    
-    
-
-	private void doCompany(Company entity) 
-	{
-		Company ph = companyDal.find_by_name(entity.name); //use seedWith field
-		
-		if (ph != null)
-		{
-			ph.name = entity.name; //!!copy all over
-			companyDal.update(ph);
-		}
-		else
-		{
-			companyDal.save(entity);
-		}
-		
-	}
-
 	public void loadAll(String json) throws Exception
 	{
     	DaoJsonLoader loader = new DaoJsonLoader();
