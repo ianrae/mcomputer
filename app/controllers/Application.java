@@ -9,6 +9,8 @@ import org.mef.framework.commands.NewCommand;
 import org.mef.framework.commands.UpdateCommand;
 import org.mef.framework.replies.Reply;
 
+import com.avaje.ebean.Ebean;
+
 import boundaries.ComputerBoundary;
 
 import play.mvc.*;
@@ -44,7 +46,8 @@ public class Application extends Controller
     }   
     public static Result update(Long id) 
     {
-		ComputerBoundary boundary = ComputerBoundary.create();
+    	Ebean.getServer(null).getAdminLogging().setDebugGeneratedSql(true);
+    	ComputerBoundary boundary = ComputerBoundary.create();
 		ComputerReply reply = boundary.addFormAndProcess(new UpdateCommand(id));
 		return renderOrForward(boundary, reply, "","","");
     }   

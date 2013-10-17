@@ -131,7 +131,8 @@ public class ComputerDAO_GEN implements IComputerDAO
 	public void updateFrom(IFormBinder binder) 
 	{
 		ComputerModel model = (ComputerModel) binder.getRawObject();
-		model.update();
+		model.setId(model.getId());
+		model.update(model.getId());
 	}
 
 
