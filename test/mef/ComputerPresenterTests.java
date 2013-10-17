@@ -190,6 +190,30 @@ public class ComputerPresenterTests extends BasePresenterTest
 		Computer t2 = _dao.findById(t.id);
 		assertEquals("task2", t2.name);
 	}
+
+	//--- delete ---
+	@Test
+	public void testDelete() 
+	{
+		Computer t = initAndSaveComputer();
+		ComputerReply reply = (ComputerReply) _presenter.process( new DeleteCommand(t.id));
+		
+		chkReplySucessful(reply, Reply.FORWARD_INDEX, null);
+		chkDalSize(0);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
+	
+	@Test
+	public void testBadDeleteUser() 
+	{
+		Computer t = initAndSaveComputer();
+		ComputerReply reply = (ComputerReply) _presenter.process(new DeleteCommand(99L)); //not exist
+		
+		chkReplySucessful(reply, Reply.FORWARD_NOT_FOUND, "could not find computer");
+		chkDalSize(1);
+		chkReplyWithoutEntity(reply, false, 0);
+	}
+	
 	
 	//--------- helper fns--------------
 	protected void chkDalSize(int expected)

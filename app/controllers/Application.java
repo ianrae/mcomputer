@@ -3,6 +3,7 @@ package controllers;
 import java.util.*;
 
 import org.mef.framework.commands.CreateCommand;
+import org.mef.framework.commands.DeleteCommand;
 import org.mef.framework.commands.EditCommand;
 import org.mef.framework.commands.IndexCommand;
 import org.mef.framework.commands.NewCommand;
@@ -53,7 +54,9 @@ public class Application extends Controller
     }   
     public static Result delete(Long id) 
     {
-        return ok("asdf");
+		ComputerBoundary boundary = ComputerBoundary.create();
+		ComputerReply reply = boundary.addFormAndProcess(new DeleteCommand(id));
+		return renderOrForward(boundary, reply, "","","");
     }   
     public static Result save() 
     {

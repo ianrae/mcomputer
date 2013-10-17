@@ -171,6 +171,18 @@ public class ComputerPresenter extends Presenter
 	{
 		ComputerReply reply = createReply();
 		reply.setDestination(Reply.FORWARD_INDEX);
+		
+		Computer t = _dao.findById(cmd.id);
+		if (t == null)
+		{
+			reply.setDestination(Reply.FORWARD_NOT_FOUND);
+			reply.setFlashFail("could not find computer");
+		}
+		else
+		{
+			_dao.delete(cmd.id);
+		}
+
 		return reply;
 	}
 
