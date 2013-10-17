@@ -92,18 +92,21 @@ public class EntityLoader extends SfxBaseObj
 	{
     	for(Company ph : phoneL)
     	{
+    		String key = makeKey(ph, ph.id);
+    		
     		Company existing = companyDal.find_by_name(ph.name); //use seedWith field
     		if (existing != null)
     		{
-    			ph.id = existing.id;
-    			companyDal.save(ph); //inserts or updates 
+    			existing.name = ph.name; //copy to existing 
+    			companyDal.save(existing); //updates 
+    			
+    			map.put(key, existing.id);
     		}
     		else
     		{
-    			String s = makeKey(ph, ph.id);
     			ph.id = 0L;
-    			companyDal.save(ph); //inserts or updates 
-    			map.put(s, ph.id);
+    			companyDal.save(ph); //inserts
+    			map.put(key, ph.id);
     		}
     	}
 	}
@@ -116,10 +119,14 @@ public class EntityLoader extends SfxBaseObj
     		{
 				String phKey = makeKey(computer.company, computer.company.id);
 				Long companyId = map.get(phKey);
-				if (companyId != 0L)
+				if (companyId != null && companyId.longValue() != 0L)
 				{
 		    		Company existing = companyDal.findById(companyId);
 					computer.company = existing;
+				}
+				else
+				{
+					log(String.format("ERR: can't find company id %d", computer.company.id));
 				}
     		
     		}    		
@@ -127,8 +134,13 @@ public class EntityLoader extends SfxBaseObj
     		Computer existing = computerDal.find_by_name(computer.name); //use seedWith field
     		if (existing != null)
     		{
-    			computer.id = existing.id;
-    			computerDal.save(computer); //inserts or updates 
+    			//copy all but id
+    			existing.company = computer.company;
+    			existing.discontinued = computer.discontinued;
+    			existing.introduced = computer.introduced;
+    			existing.name = computer.name;
+    			
+    			computerDal.save(existing); //updates 
     		}
     		else
     		{
