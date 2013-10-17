@@ -9,8 +9,6 @@ import mef.daos.*;
 import org.mef.framework.binder.IFormBinder;
 import org.codehaus.jackson.map.ObjectMapper;
 import mef.gen.*;
-import mef.presenters.MyPage;
-
 import org.mef.framework.entitydb.EntityDB;
 import java.util.Date;
 import com.avaje.ebean.Page;
@@ -110,16 +108,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
 //method
 public Page<Computer> page(int page, int pageSize,String orderBy, String order, String filter)
 {
-	ArrayList<Computer> tmpL = new ArrayList<Computer>();
-	tmpL.addAll(_L);
-	List<Computer> list1 = tmpL;
-	if (orderBy != null)
-	{
-		_entityDB.orderBy(list1, orderBy, order, String.class);
-	}
-	
-	return new MyPage<Computer>(list1, pageSize, page, orderBy);
+	return null;
 }
-
 
 }
