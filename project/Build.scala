@@ -12,12 +12,13 @@ object ApplicationBuild extends Build {
       javaJdbc,
       javaEbean,
     "commons-io" % "commons-io" % "2.3",
-"postgresql" % "postgresql" % "8.4-702.jdbc4"      
+"postgresql" % "postgresql" % "8.4-702.jdbc4", 
+     "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
+     
     )
 
     val main = play.Project(appName, appVersion, appDependencies).settings(
       // Add your own project settings here     
-	resolvers += Resolver.file("meflib.jar", file("lib")) transactional()	
        
     )
 

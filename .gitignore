@@ -19,3 +19,10 @@ test-result
 server.pid
 *.iml
 *.eml
+
+/bin
+/lib
+.target
+.settings
+*.sublime*
+
