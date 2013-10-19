@@ -16,7 +16,7 @@ public class MGEN_AppScaffold extends BaseTest
 		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
 		
 		String appDir = this.getCurrentDir("");
-		String stDir = this.getCurrentDir("..\\dalgen\\code\\mettle\\app\\org\\mef\\tools\\mgen\\resources\\app");
+		String stDir = this.getCurrentDir("..\\dalgen\\code\\mettle\\conf\\mgen\\resources\\app");
 log(appDir);
 log(stDir);
 		
