@@ -21,7 +21,6 @@ server.pid
 *.eml
 
 /bin
-/lib
 .target
 .settings
 *.sublime*
