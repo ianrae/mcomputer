@@ -12,14 +12,14 @@ object ApplicationBuild extends Build {
       javaJdbc,
       javaEbean,
     "commons-io" % "commons-io" % "2.3",
-"postgresql" % "postgresql" % "8.4-702.jdbc4", 
+	"postgresql" % "postgresql" % "8.4-702.jdbc4", 
      "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
      
     )
 
-    val main = play.Project(appName, appVersion, appDependencies).settings(
-      // Add your own project settings here     
-       
+ 	val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
+      // Change this to point to your local play repository
+      resolvers += Resolver.url("Mettle Repository", url("http://ianrae.github.io/snapshot/"))(Resolver.ivyStylePatterns)
     )
 
 }
