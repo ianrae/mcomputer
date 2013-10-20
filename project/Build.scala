@@ -19,7 +19,8 @@ object ApplicationBuild extends Build {
 
  	val main = PlayProject(appName, appVersion, appDependencies, mainLang = JAVA).settings(
       // Change this to point to your local play repository
-      resolvers += Resolver.url("Mettle Repository", url("http://ianrae.github.io/snapshot/"))(Resolver.ivyStylePatterns)
+      resolvers += Resolver.url("Mettle Repository", url("http://ianrae.github.io/snapshot/"))(Resolver.ivyStylePatterns),
+      checksums := Nil
     )
 
 }
