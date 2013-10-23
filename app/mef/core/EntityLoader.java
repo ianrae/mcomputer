@@ -81,6 +81,8 @@ public class EntityLoader extends SfxBaseObj
 	{
     	for(Computer computer : computerL)
     	{
+    		String key = makeKey(computer, computer.id);
+    		
     		if (computer.company != null)
     		{
 				String phKey = makeKey(computer.company, computer.company.id);
@@ -107,13 +109,13 @@ public class EntityLoader extends SfxBaseObj
     			existing.name = computer.name;
     			
     			computerDal.save(existing); //updates 
+    			map.put(key, existing.id);
     		}
     		else
     		{
-    			String s = makeKey(computer, computer.id);
     			computer.id = 0L;
     			computerDal.save(computer); //inserts or updates 
-    			map.put(s, computer.id);
+    			map.put(key, computer.id);
     		}
     	}
     	
