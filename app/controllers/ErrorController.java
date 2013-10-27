@@ -7,7 +7,7 @@ import models.*;
 
 import views.html.*;
 
-public class ErrorC extends Controller {
+public class ErrorController extends Controller {
 	
     public static Result index() {
         return ok("hello Play!");

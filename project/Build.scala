@@ -11,7 +11,6 @@ object ApplicationBuild extends Build {
       javaCore,
       javaJdbc,
       javaEbean,
-    "commons-io" % "commons-io" % "2.3",
 	"postgresql" % "postgresql" % "8.4-702.jdbc4", 
      "mettle" % "mettle_2.10" % "1.0-SNAPSHOT"
      

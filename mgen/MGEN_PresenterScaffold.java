@@ -1,6 +1,7 @@
 
 
 
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
@@ -16,23 +17,14 @@ public class MGEN_PresenterScaffold extends BaseTest
 	{
 		createContext();
 		PresenterScaffoldCodeGenerator gen = new PresenterScaffoldCodeGenerator(_ctx);
-		
-		gen.disableFileIO = true;  //***** WATCH OUT!11 ****
-		
 		String appDir = this.getCurrentDir("");
-		String stDir = this.getCurrentDir("..\\dalgen\\code\\mettle\\conf\\mgen\\resources\\presenter");
-log(appDir);
-log(stDir);
+		log(appDir);
 		
-		int n = gen.init(appDir, stDir);
-		assertEquals(2, n);
+		int n = gen.init(appDir);
+		//assertEquals(1, n);
 
-		boolean b = false;
-//		boolean b = gen.generate(0);
-		b = gen.generate("Company");
-		b = gen.generate("Computer");
-		if (b)
-		{}
+		boolean b = gen.generateAll();
+		assertTrue(b);
 	}
 
 }

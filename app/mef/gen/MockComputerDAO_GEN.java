@@ -26,6 +26,16 @@ public class MockComputerDAO_GEN implements IComputerDAO
     @Override
     public Computer findById(long id) 
     {
+    	Computer entity = this.findActualById(id);
+    	if (entity != null)
+    	{
+    		return new Computer(entity); //return copy
+        }
+        return null; //not found
+    }
+
+    protected Computer findActualById(long id) 
+    {
         for(Computer entity : _L)
         {
             if (entity.id == id)
@@ -45,7 +55,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
     @Override
     public void delete(long id) 
     {
-        Computer entity = this.findById(id);
+        Computer entity = this.findActualById(id);
         if (entity != null)
         {
             _L.remove(entity);
@@ -59,6 +69,12 @@ public class MockComputerDAO_GEN implements IComputerDAO
 		{
     		entity.id = new Long(0L);
     	}
+
+    	if (findActualById(entity.id) != null)
+    	{
+    		throw new RuntimeException(String.format("save: id %d already exists", entity.id));
+    	}
+
 
         delete(entity.id); //remove existing
         if (entity.id == 0)
@@ -85,6 +101,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
 	@Override
 	public void update(Computer entity) 
 	{
+		this.delete(entity.id);
 		this.save(entity);
 	}
 
@@ -92,6 +109,7 @@ public class MockComputerDAO_GEN implements IComputerDAO
     public void updateFrom(IFormBinder binder) 
     {
     	Computer entity = (Computer) binder.getObject();
+		this.delete(entity.id);
     	save(entity);
 
     }

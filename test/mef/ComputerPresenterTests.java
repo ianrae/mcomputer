@@ -90,6 +90,7 @@ public class ComputerPresenterTests extends BasePresenterTest
 	{
 		Initializer.loadSeedData(_ctx);
 		IndexComputerCommand cmd = new IndexComputerCommand();
+		cmd.orderBy = "name";
 		ComputerReply reply = (ComputerReply) _presenter.process(cmd);
 		
 		chkReplySucessful(reply, Reply.VIEW_INDEX, null);

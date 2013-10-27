@@ -76,7 +76,7 @@ public class Application extends Controller
     {
 		if (reply.failed())
 		{
-			return redirect(routes.ErrorC.logout());
+			return redirect(routes.ErrorController.logout());
 		}
 		
 		Form<ComputerModel> frm = null;
@@ -94,7 +94,7 @@ public class Application extends Controller
 			return  Results.redirect(routes.Application.index(0, "name", "asc", ""));
 
 		default:
-			return play.mvc.Results.redirect(routes.ErrorC.logout());	
+			return play.mvc.Results.redirect(routes.ErrorController.logout());	
     	}
 	}
 

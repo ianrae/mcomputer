@@ -8,6 +8,7 @@ import mef.daos.ICompanyDAO;
 import mef.daos.IComputerDAO;
 import mef.entities.Company;
 import mef.entities.Computer;
+import mef.gen.EntityLoaderSaver_GEN;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -59,64 +60,29 @@ public class EntityLoader extends SfxBaseObj
     	for(Company ph : phoneL)
     	{
     		String key = makeKey(ph, ph.id);
-    		
     		Company existing = companyDal.find_by_name(ph.name); //use seedWith field
-    		if (existing != null)
-    		{
-    			existing.name = ph.name; //copy to existing 
-    			companyDal.save(existing); //updates 
-    			
-    			map.put(key, existing.id);
-    		}
-    		else
-    		{
-    			ph.id = 0L;
-    			companyDal.save(ph); //inserts
-    			map.put(key, ph.id);
-    		}
-    	}
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(ph, existing, companyDal);
+    		map.put(key, id);    	}
 	}
 	
 	private void saveComputers(List<Computer> computerL, HashMap<String, Long> map) 
 	{
     	for(Computer computer : computerL)
     	{
-    		String key = makeKey(computer, computer.id);
-    		
     		if (computer.company != null)
     		{
-				String phKey = makeKey(computer.company, computer.company.id);
-				Long companyId = map.get(phKey);
-				if (companyId != null && companyId.longValue() != 0L)
+    			long existingId = findIdInMap(computer.company, computer.company.id, map);
+				if (existingId != 0L)
 				{
-		    		Company existing = companyDal.findById(companyId);
+		    		Company existing = companyDal.findById(existingId);
 					computer.company = existing;
 				}
-				else
-				{
-					log(String.format("ERR: can't find company id %d", computer.company.id));
-				}
-    		
     		}    		
     		
+    		String key = makeKey(computer, computer.id);
     		Computer existing = computerDal.find_by_name(computer.name); //use seedWith field
-    		if (existing != null)
-    		{
-    			//copy all but id
-    			existing.company = computer.company;
-    			existing.discontinued = computer.discontinued;
-    			existing.introduced = computer.introduced;
-    			existing.name = computer.name;
-    			
-    			computerDal.save(existing); //updates 
-    			map.put(key, existing.id);
-    		}
-    		else
-    		{
-    			computer.id = 0L;
-    			computerDal.save(computer); //inserts or updates 
-    			map.put(key, computer.id);
-    		}
+    		long id = EntityLoaderSaver_GEN.saveOrUpdate(computer, existing, computerDal);
+    		map.put(key, id);
     	}
     	
     	
@@ -129,4 +95,18 @@ public class EntityLoader extends SfxBaseObj
 		return s;
 	}
 
+	private long findIdInMap(Entity entity, Long id, HashMap<String, Long> map) 
+	{
+		String key = makeKey(entity, id);
+		Long physicalId = map.get(key);
+		if (physicalId != null && physicalId.longValue() != 0L)
+		{
+			return physicalId.longValue();
+		}
+		else
+		{
+			log(String.format("ERR: can't find id: %s", key));
+			return 0;
+		}
+	}	
 }
